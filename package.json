@@ -1,6 +1,6 @@
 {
   "name": "ts-pubsy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Fully Typed PubSub Mechanism with Channel and Payload autocompletion.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
