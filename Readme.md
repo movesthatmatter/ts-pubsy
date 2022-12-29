@@ -30,7 +30,6 @@ gamePubsy.subscribe('onGameFinished', (game) => {
   console.log(game.winner);
 });
 
-```
 
 // Publish (later on)
 
@@ -45,3 +44,4 @@ gamePubsy.publish('onGameFinish', {
   winner: 'player-2',
 });
 
+```
