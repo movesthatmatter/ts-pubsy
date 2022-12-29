@@ -1,17 +1,11 @@
-# relational-redis-store
+# ts-pubsy
 
-Fully Typed Relational Redis store that supports Foreign Keys, Indexes. This allows queries to combine multiple records into the result out of the box.
+Fully Typed PubSub Mechanism with Channel and Payload autocompletion.
 
 # Usage
 
 ```
-import * as redisSDK from 'handy-redis';
-import Store from 'relational-redis-store';
-
-type User = {
-  id: string;
-  name: string;
-}
+import { Pubsy } from 'ts-pubsy';
 
 type Game = {
   id: string;
@@ -19,30 +13,35 @@ type Game = {
   winner?: User[id];
 }
 
-type CollectionMap = {
-  users: User;
-  games: Game;
-};
+type GameEvents = {
+  onNewGame: Game;
+  onGameFinish: { id: string, winner: User[id] };
+}
 
-const store = new Store<CollectionMap>(redisSDK.createHandyClient({
-  url: {REDIS_URL},
-}))
+const gamePubsy = new Pubsy<GameEvents>();
 
-// Create a Game
+// Subscriptions
 
-store.addItemToCollection('games', {
-  players: ['a', 'b'],
-}, id, {
-  foreignKeys: {},
+gamePubsy.subscribe('onNewGame', (game) => {
+  // do stuff with the Game object
 });
 
-// Retrieve a Game
-
-store.getItemInCollection('games', id);
+gamePubsy.subscribe('onGameFinished', (game) => {
+  console.log(game.winner);
+});
 
 ```
 
-# To Do
+// Publish (later on)
 
-- Atomicity
-- Transactions
+gamePubsy.publish('onNewGame', {
+  id: '1',
+  players: ['player-1', 'player-2'],
+  winner: undefined,
+});
+
+gamePubsy.publish('onGameFinish', {
+  id: '1',
+  winner: 'player-2',
+});
+

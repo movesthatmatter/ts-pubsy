@@ -1,7 +1,7 @@
 {
   "name": "ts-pubsy",
   "version": "0.0.0",
-  "description": "A Super Simple Typed PubSub",
+  "description": "Fully Typed PubSub Mechanism with Channel and Payload autocompletion.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/movesthatmatter/ts-pubsy.git",
